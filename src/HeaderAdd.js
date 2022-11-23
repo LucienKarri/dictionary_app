@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, TextInput } from "react-native";
+import { StyleSheet, View, TouchableOpacity, TextInput } from "react-native";
 
 import { AntDesign } from '@expo/vector-icons';
 import { useState } from "react";
@@ -8,10 +8,12 @@ export const HeaderAdd = ({ onClose, onAddWord }) => {
   const [ru, setRu] = useState('');
   const [isSetted, setIsSetted] = useState(false)
 
+  //проверяем язык ввода с помощью регулярного выражения
   const textLang = (str) => {
     return /[а-я]/i.test(str);
   }
 
+  //при подтверждении ввода, отображаем разные инпуты и вызываем функцию добавляющую слово
   const onSubmit = () => {
     if (en.length > 0 && !textLang(en)) {
       setIsSetted(true)

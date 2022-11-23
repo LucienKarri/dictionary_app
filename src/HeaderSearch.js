@@ -1,6 +1,5 @@
-import { StyleSheet, Text, View, TouchableOpacity, TextInput } from "react-native";
+import { StyleSheet, View, TouchableOpacity, TextInput } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
-import { useState } from "react";
 import debounce from "lodash.debounce";
 
 export const HeaderSearch = ({ onClose, setQuery }) => {
@@ -9,6 +8,7 @@ export const HeaderSearch = ({ onClose, setQuery }) => {
     return /[а-я]/i.test(str);
   }
 
+  //выполняем поиск с задержкой (200 мс), чтобы не отправлять лишних запросов, при помощи debounce функции
   const onChange = (text) => {
     if (!textLang(text)) {
       setQuery(text)

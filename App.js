@@ -1,3 +1,4 @@
+//подключение сторонних библиотек
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import { StyleSheet, SafeAreaView, StatusBar as AndroidStatusBar, Platform, View, Text, TouchableOpacity } from 'react-native';
@@ -5,16 +6,20 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppLoading from 'expo-app-loading';
 import { AntDesign } from '@expo/vector-icons';
 
+//подключение собственных компонентов
 import { dictionary } from './data/dictionary';
 import { HeaderMain } from './src/HeaderMain';
 import { DictionaryList } from './src/DictionaryList';
 
 export default function App() {
+
+  //инициализируем состояния
   const [screen, setScreen] = useState('dict');
   const [words, setWords] = useState([]);
   const [query, setQuery] = useState('');
   const [ready, setReady] = useState(false);
 
+  //при запуске загружаем слова, добавленные мной, из локального хранилища
   const loadWords = () => {
     AsyncStorage.getItem('myDictionaryWords')
       .then((data) => {
@@ -25,6 +30,7 @@ export default function App() {
       .catch((error) => console.log(error))
   }
 
+  //индикатор загрузки, пока происходит загрузка слов (почти незаметен, грузится все быстро)
   if (!ready && screen !== 'dict') {
     return (
       <AppLoading
@@ -35,6 +41,7 @@ export default function App() {
     )
   }
 
+  //изменение вида главного экрана, в зависимости от того, какая вкладка активна
   const onChangeScreen = (val) => {
     if (val === 1) {
       setScreen('info')
@@ -45,6 +52,7 @@ export default function App() {
     }
   }
 
+  //добавление нового слова
   const onAddWord = (newWord) => {
     if (words.filter((item) => item.id === newWord.id).length === 0) {
       const newArr = [newWord, ...words];
@@ -54,6 +62,7 @@ export default function App() {
     }
   }
 
+  //удаление слова
   const onDeleteWord = (word) => {
     const newArr = words.filter((item) => item.id !== word.id);
     AsyncStorage.setItem('myDictionaryWords', JSON.stringify(newArr))
@@ -61,6 +70,7 @@ export default function App() {
       .catch((error) => console.log(error));
   }
 
+  //фильтрация списка слов, согласно поисковому запросу
   const filterList = () => {
     const arr = screen === 'dict' ? dictionary : words;
 
@@ -76,6 +86,7 @@ export default function App() {
     return arr;
   }
 
+  //рендер страницы, если нажали на кнопку "инфо" рендер страницы с информацией, иначе главной страницы
   return screen === 'info' ? (
     <SafeAreaView style={styles.androidSafeAreaView}>
       <TouchableOpacity onPress={() => setScreen('dict')}>
@@ -111,6 +122,7 @@ export default function App() {
   );
 }
 
+//стилизация компонентов
 const styles = StyleSheet.create({
   androidSafeAreaView: {
     flex: 1,

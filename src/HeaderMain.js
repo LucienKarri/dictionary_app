@@ -13,10 +13,12 @@ export const HeaderMain = ({screen, onChangeScreen, onAddWord, query, setQuery }
     setQuery('');
   }
 
+  //если нажата кнопка "добавить слово (плюс)" отображаем другой заголовк для добавления
   if (headerType === 'add') {
     return <HeaderAdd onClose={onClose} onAddWord={onAddWord} />
   }
-
+  
+  //если нажата кнопка "поиска" отображаем другой заголовк для поиска
   if (headerType === 'search') {
     return <HeaderSearch onClose={onClose} query={query} setQuery={setQuery} />
   }

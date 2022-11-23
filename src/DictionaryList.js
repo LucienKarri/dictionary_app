@@ -1,5 +1,4 @@
-import { Text, View, TouchableHighlight, StyleSheet, TouchableOpacity, FlatList } from "react-native";
-import { SwipeListView } from "react-native-swipe-list-view";
+import { Text, View,  StyleSheet, TouchableOpacity, FlatList } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
 
 export const DictionaryList = ({ list, screen, onAddWord, onDeleteWord }) => {
@@ -11,7 +10,8 @@ export const DictionaryList = ({ list, screen, onAddWord, onDeleteWord }) => {
     }
   }
 
-  if (screen !== 'dict' && list.length === 0) {
+  //выводим сообщение, если список слов пуст
+  if (list.length === 0) {
     return (
       <View style={styles.cardView}>
         <Text style={styles.name}>Поиск по запросу не дал результатов</Text>
